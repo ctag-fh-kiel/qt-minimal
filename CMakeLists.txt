@@ -58,7 +58,7 @@ install(CODE [[
             PRE_EXCLUDE_REGEXES "api-ms-*" "ext-ms-*"
             POST_EXCLUDE_REGEXES ".*system32/.*\\.dll"
             )
-        message(STATUS "Resolving runtime dependencies for $<TARGET_FILE:mylib>")
+        message(STATUS "Resolving runtime dependencies for $<TARGET_FILE_DIR:QTStarter>")
         foreach(dep ${deps_resolved})
             file(INSTALL ${dep} DESTINATION ${CMAKE_INSTALL_PREFIX})
         endforeach()
