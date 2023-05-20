@@ -9,7 +9,7 @@ class QMyMainWindow : public QMainWindow
 Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit QMyMainWindow(QWidget *parent = 0);
 
 private slots:
     void on_actionExit_triggered();
