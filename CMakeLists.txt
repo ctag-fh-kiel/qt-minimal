@@ -29,7 +29,8 @@ install(TARGETS QTStarter DESTINATION bin)
 # add all mingw64 dlls to install target
 # this is overkill, but collecting only the needed dlls is a pain
 set(MINGW_ROOT "c:/msys64/mingw64")
-install(DIRECTORY ${MINGW_ROOT}/bin/ DESTINATION bin FILES_MATCHING PATTERN "*.dll")
+# install all dlls except those which start with Qt5
+install(DIRECTORY ${MINGW_ROOT}/bin/ DESTINATION bin FILES_MATCHING PATTERN "*.dll" EXCLUDE PATTERN "^Qt5"
 
 # alternatively one could use the following to only install the needed dlls
 # add qt5 dlls to install target
@@ -39,6 +40,10 @@ install(DIRECTORY ${MINGW_ROOT}/bin/ DESTINATION bin FILES_MATCHING PATTERN "*.d
 #        $<TARGET_FILE:Qt5::Network>
 #        $<TARGET_FILE:Qt5::Widgets>
 #        DESTINATION bin)
+
+# install qt5 plugins
+#install(DIRECTORY ${MINGW_ROOT}/plugins/ DESTINATION bin/plugins)
+
 
 # make deployment using cpack and nsis
 set(CPACK_GENERATOR "NSIS")
