@@ -1,4 +1,8 @@
-## Steps
+## About
+
+Minimal Qt5 application for Windows using MSYS2 MinGW x64 toolchain.
+
+## Build & Run
 
 - Download MSYS2 https://www.msys2.org/
 - Start MSYS2 MinGW x64 shell
@@ -11,5 +15,13 @@
   - mingw32-make
 - Run with
   - ./QtTest.exe
-- Deployment tools
+
+## Create installer / deployment
+- Install deployment dependencies / nsis installer
   - pacman -Su mingw-w64-nsis
+- Build with
+  - mkdir build
+  - cd build
+  - cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release ..
+  - mingw32-make
+  - cpack
