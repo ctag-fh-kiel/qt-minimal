@@ -23,9 +23,6 @@ add_executable(QTStarter ${CPP_FILES} ${QT_WRAP})
 
 target_link_libraries(QTStarter dishlib Qt5::Core Qt5::Gui Qt5::Network Qt5::Widgets)
 
-# Add CPack module
-include(CPack)
-
 # Set NSIS as the generator
 set(CPACK_GENERATOR NSIS)
 
@@ -43,3 +40,6 @@ set(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES")
 
 # Set NSIS start menu shortcut
 set(CPACK_NSIS_MENU_LINKS "QTStarter.exe" "QTStarter")
+
+# Add CPack module
+include(CPack)
