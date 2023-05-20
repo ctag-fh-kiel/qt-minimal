@@ -34,10 +34,32 @@ install(FILES
         DESTINATION bin)
 
 # add msys2 dlls to install target
-set(MSYS2_PATH "c:/msys64")
-install(FILES
-        $<TARGET_RUNTIME_DLLS:QTStarter>
-        DESTINATION bin)
+set(MY_DEPENDENCY_PATHS "c:/msys64")
+
+# Transfer the value of ${MY_DEPENDENCY_PATHS} into the install script
+install(CODE "set(MY_DEPENDENCY_PATHS \"${MY_DEPENDENCY_PATHS}\")")
+
+install(CODE [[
+  file(GET_RUNTIME_DEPENDENCIES
+    #LIBRARIES $<TARGET_FILE:mylibtarget>
+    EXECUTABLES $<TARGET_FILE:QTStarter>
+    RESOLVED_DEPENDENCIES_VAR _r_deps
+    UNRESOLVED_DEPENDENCIES_VAR _u_deps
+    DIRECTORIES ${MY_DEPENDENCY_PATHS}
+  )
+  foreach(_file ${_r_deps})
+    message(STATUS "Copying dependency ${_file}")
+    file(INSTALL
+      DESTINATION "${CMAKE_INSTALL_PREFIX}/lib"
+      TYPE SHARED_LIBRARY
+      FOLLOW_SYMLINK_CHAIN
+      FILES "${_file}"
+    )
+  endforeach()
+  foreach(_file ${_u_deps})
+    message(STATUS "Unresolved dependency ${_file}")
+  endforeach()
+]])
 
 
 # make deployment using cpack and nsis
