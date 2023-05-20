@@ -25,13 +25,23 @@ target_link_libraries(QTStarter dishlib Qt5::Core Qt5::Gui Qt5::Network Qt5::Wid
 
 # Copy the Qt DLLs to the build directory
 add_custom_command(TARGET QTStarter POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
         $<TARGET_FILE:Qt5::Core>
         $<TARGET_FILE:Qt5::Gui>
         $<TARGET_FILE:Qt5::Network>
         $<TARGET_FILE:Qt5::Widgets>
         $<TARGET_FILE_DIR:QTStarter>
-)
+        )
+
+# create install target
+install(TARGETS QTStarter DESTINATION bin)
+# add qt5 dlls to install target
+install(FILES
+        $<TARGET_FILE:Qt5::Core>
+        $<TARGET_FILE:Qt5::Gui>
+        $<TARGET_FILE:Qt5::Network>
+        $<TARGET_FILE:Qt5::Widgets>
+        DESTINATION bin)
 
 # make deployment using cpack and nsis
 set(CPACK_GENERATOR "NSIS")
