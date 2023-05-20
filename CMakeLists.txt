@@ -52,10 +52,8 @@ set(CPACK_NSIS_IGNORE_LICENSE_PAGE ON)
 set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
 #set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}/icon.ico")
 #set(CPACK_NSIS_MUI_UNIICON "${CMAKE_CURRENT_SOURCE_DIR}/icon.ico")
-#set(CPACK_NSIS_MENU_LINKS "
-#    \"${CMAKE_CURRENT_SOURCE_DIR}/readme.md\" \"Readme\"
-#    \"${CMAKE_CURRENT_SOURCE_DIR}/license.txt\" \"License\"
-#")
-
+set(CPACK_NSIS_MENU_LINKS
+    "bin/QTStarter.exe" "QTStarter"
+)
 
 include(CPack)
