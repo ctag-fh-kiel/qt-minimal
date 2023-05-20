@@ -33,6 +33,19 @@ add_custom_command(TARGET QTStarter POST_BUILD
         $<TARGET_FILE_DIR:QTStarter>
         )
 
+# Copy msys2 dlls to the build directory
+add_custom_command(TARGET QTStarter POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $ENV{MSYS2_PATH}/mingw64/bin/libgcc_s_seh-1.dll
+        $ENV{MSYS2_PATH}/mingw64/bin/libstdc++-6.dll
+        $ENV{MSYS2_PATH}/mingw64/bin/libwinpthread-1.dll
+        $ENV{MSYS2_PATH}/mingw64/bin/zlib1.dll
+        $ENV{MSYS2_PATH}/mingw64/bin/libcrypto-1_1-x64.dll
+        $ENV{MSYS2_PATH}/mingw64/bin/libssl-1_1-x64.dll
+        $ENV{MSYS2_PATH}/mingw64/bin/libcurl-4.dll
+        $<TARGET_FILE_DIR:QTStarter>
+        )
+
 # create install target
 install(TARGETS QTStarter DESTINATION bin)
 # add qt5 dlls to install target
@@ -41,6 +54,17 @@ install(FILES
         $<TARGET_FILE:Qt5::Gui>
         $<TARGET_FILE:Qt5::Network>
         $<TARGET_FILE:Qt5::Widgets>
+        DESTINATION bin)
+
+# add msys2 dlls to install target
+install(FILES
+        $ENV{MSYS2_PATH}/mingw64/bin/libgcc_s_seh-1.dll
+        $ENV{MSYS2_PATH}/mingw64/bin/libstdc++-6.dll
+        $ENV{MSYS2_PATH}/mingw64/bin/libwinpthread-1.dll
+        $ENV{MSYS2_PATH}/mingw64/bin/zlib1.dll
+        $ENV{MSYS2_PATH}/mingw64/bin/libcrypto-1_1-x64.dll
+        $ENV{MSYS2_PATH}/mingw64/bin/libssl-1_1-x64.dll
+        $ENV{MSYS2_PATH}/mingw64/bin/libcurl-4.dll
         DESTINATION bin)
 
 # make deployment using cpack and nsis
