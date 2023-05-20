@@ -11,7 +11,7 @@
 
 #include "QCookDishes.h"
 
-QMyMainWindow::MainWindow(QWidget *parent) : QMainWindow(parent){
+QMyMainWindow::QMyMainWindow(QWidget *parent) : QMainWindow(parent){
     // status bar
     statusBar()->showMessage(tr("Startin App"), 10000);
 
