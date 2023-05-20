@@ -41,7 +41,6 @@ install(FILES
         ${MSYS2_PATH}/mingw64/bin/libstdc++-6.dll
         ${MSYS2_PATH}/mingw64/bin/libwinpthread-1.dll
         ${MSYS2_PATH}/mingw64/bin/zlib1.dll
-        ${MSYS2_PATH}/mingw64/bin/libcrypto-1_1-x64.dll
         ${MSYS2_PATH}/mingw64/bin/libssl-1_1-x64.dll
         ${MSYS2_PATH}/mingw64/bin/libcurl-4.dll
         DESTINATION bin)
