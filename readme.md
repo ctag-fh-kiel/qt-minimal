@@ -19,9 +19,9 @@ Minimal Qt5 application for Windows using MSYS2 MinGW x64 toolchain.
 ## Create installer / deployment
 - Install deployment dependencies / nsis installer
   - pacman -Su mingw-w64-nsis
-- Build with
+- Build and create installer with
   - mkdir build
   - cd build
   - cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release ..
   - mingw32-make
-  - cpack
+  - cpack -C Release
