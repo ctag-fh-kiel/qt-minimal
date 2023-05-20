@@ -23,7 +23,6 @@ add_executable(QTStarter ${CPP_FILES} ${QT_WRAP})
 
 target_link_libraries(QTStarter dishlib Qt5::Core Qt5::Gui Qt5::Network Qt5::Widgets)
 
-
 # create install target
 install(TARGETS QTStarter DESTINATION bin)
 # add qt5 dlls to install target
@@ -54,7 +53,7 @@ install(CODE [[
         file(GET_RUNTIME_DEPENDENCIES
             RESOLVED_DEPENDENCIES_VAR deps_resolved
             UNRESOLVED_DEPENDENCIES_VAR deps_unresolved
-            LIBRARIES $<TARGET_FILE:mylib>
+            LIBRARIES $<TARGET_FILE_DIR:QTStarter>
             DIRECTORIES ${CMAKE_SYSTEM_LIBRARY_PATH} ${CMAKE_MINGW_SYSTEM_LIBRARY_PATH}
             PRE_EXCLUDE_REGEXES "api-ms-*" "ext-ms-*"
             POST_EXCLUDE_REGEXES ".*system32/.*\\.dll"
