@@ -25,41 +25,20 @@ target_link_libraries(QTStarter dishlib Qt5::Core Qt5::Gui Qt5::Network Qt5::Wid
 
 # create install target
 install(TARGETS QTStarter DESTINATION bin)
+
+# add all mingw64 dlls to install target
+# this is overkill, but collecting only the needed dlls is a pain
+set(MINGW_ROOT "c:/msys64/mingw64")
+install(DIRECTORY ${MINGW_ROOT}/bin/ DESTINATION bin FILES_MATCHING PATTERN "*.dll")
+
+# alternatively one could use the following to only install the needed dlls
 # add qt5 dlls to install target
-install(FILES
-        $<TARGET_FILE:Qt5::Core>
-        $<TARGET_FILE:Qt5::Gui>
-        $<TARGET_FILE:Qt5::Network>
-        $<TARGET_FILE:Qt5::Widgets>
-        DESTINATION bin)
-
-# add msys2 dlls to install target
-set(MY_DEPENDENCY_PATHS "c:/msys64")
-
-# Transfer the value of ${MY_DEPENDENCY_PATHS} into the install script
-install(CODE "set(MY_DEPENDENCY_PATHS \"${MY_DEPENDENCY_PATHS}\")")
-
-install(CODE [[
-  file(GET_RUNTIME_DEPENDENCIES
-    EXECUTABLES $<TARGET_FILE:QTStarter>
-    RESOLVED_DEPENDENCIES_VAR _r_deps
-    UNRESOLVED_DEPENDENCIES_VAR _u_deps
-    DIRECTORIES ${MY_DEPENDENCY_PATHS}
-  )
-  foreach(_file ${_r_deps})
-    message(STATUS "Copying dependency ${_file}")
-    file(INSTALL
-      DESTINATION "${CMAKE_INSTALL_PREFIX}/lib"
-      TYPE SHARED_LIBRARY
-      FOLLOW_SYMLINK_CHAIN
-      FILES "${_file}"
-    )
-  endforeach()
-  foreach(_file ${_u_deps})
-    message(STATUS "Unresolved dependency ${_file}")
-  endforeach()
-]])
-
+#install(FILES
+#        $<TARGET_FILE:Qt5::Core>
+#        $<TARGET_FILE:Qt5::Gui>
+#        $<TARGET_FILE:Qt5::Network>
+#        $<TARGET_FILE:Qt5::Widgets>
+#        DESTINATION bin)
 
 # make deployment using cpack and nsis
 set(CPACK_GENERATOR "NSIS")
