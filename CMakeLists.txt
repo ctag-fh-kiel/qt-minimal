@@ -23,23 +23,36 @@ add_executable(QTStarter ${CPP_FILES} ${QT_WRAP})
 
 target_link_libraries(QTStarter dishlib Qt5::Core Qt5::Gui Qt5::Network Qt5::Widgets)
 
-# Set NSIS as the generator
-set(CPACK_GENERATOR NSIS)
+# Copy the Qt DLLs to the build directory
+add_custom_command(TARGET QTStarter POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_FILE:Qt5::Core>
+        $<TARGET_FILE:Qt5::Gui>
+        $<TARGET_FILE:Qt5::Network>
+        $<TARGET_FILE:Qt5::Widgets>
+        $<TARGET_FILE_DIR:QTStarter>
+)
 
-# Set package information
+# make deployment using cpack and nsis
+set(CPACK_GENERATOR "NSIS")
 set(CPACK_PACKAGE_NAME "QTStarter")
+set(CPACK_PACKAGE_VENDOR "Dish")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "QTStarter")
 set(CPACK_PACKAGE_VERSION "1.0.0")
-set(CPACK_PACKAGE_VENDOR "PIC-Software")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "QTStarter - QT Demo Application")
-set(CPACK_PACKAGE_EXECUTABLES "QTStarter" "QTStarter")
+set(CPACK_PACKAGE_VERSION_MAJOR "1")
+set(CPACK_PACKAGE_VERSION_MINOR "0")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "QTStarter")
+set(CPACK_NSIS_MODIFY_PATH ON)
+set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
+set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
+#set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}/icon.ico")
+#set(CPACK_NSIS_MUI_UNIICON "${CMAKE_CURRENT_SOURCE_DIR}/icon.ico")
+#set(CPACK_NSIS_MENU_LINKS "
+#    \"${CMAKE_CURRENT_SOURCE_DIR}/README.txt\" \"Readme\"
+#    \"${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.txt\" \"License\"
+#")
+set(CPACK_NSIS_URL_INFO_ABOUT "")
+set(CPACK_NSIS_CONTACT "")
 
-# Set NSIS-specific variables
-set(CPACK_NSIS_PACKAGE_NAME "QTStarter")
-set(CPACK_NSIS_DISPLAY_NAME "QTStarter")
-set(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES")
-
-# Set NSIS start menu shortcut
-set(CPACK_NSIS_MENU_LINKS "QTStarter.exe" "QTStarter")
-
-# Add CPack module
 include(CPack)
