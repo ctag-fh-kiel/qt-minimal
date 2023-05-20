@@ -42,7 +42,32 @@ install(FILES
         ${MSYS2_PATH}/mingw64/bin/libwinpthread-1.dll
         ${MSYS2_PATH}/mingw64/bin/zlib1.dll
         ${MSYS2_PATH}/mingw64/bin/libcurl-4.dll
+        ${MSYS2_PATH}/mingw64/bin/libdouble-conversion.dll
+        ${MSYS2_PATH}/mingw64/bin/libicuin72.dll
+        ${MSYS2_PATH}/mingw64/bin/libicuuc72.dll
+        ${MSYS2_PATH}/mingw64/bin/libpcre2-16-0.dll
         DESTINATION bin)
+
+set(CMAKE_MINGW_SYSTEM_LIBRARY_PATH "${MSYS2_PATH}/mingw64/bin")
+install(CODE [[
+        message(STATUS "Looking for deps in ${CMAKE_SYSTEM_LIBRARY_PATH};${CMAKE_MINGW_SYSTEM_LIBRARY_PATH}")
+        file(GET_RUNTIME_DEPENDENCIES
+            RESOLVED_DEPENDENCIES_VAR deps_resolved
+            UNRESOLVED_DEPENDENCIES_VAR deps_unresolved
+            LIBRARIES $<TARGET_FILE:mylib>
+            DIRECTORIES ${CMAKE_SYSTEM_LIBRARY_PATH} ${CMAKE_MINGW_SYSTEM_LIBRARY_PATH}
+            PRE_EXCLUDE_REGEXES "api-ms-*" "ext-ms-*"
+            POST_EXCLUDE_REGEXES ".*system32/.*\\.dll"
+            )
+        message(STATUS "Resolving runtime dependencies for $<TARGET_FILE:mylib>")
+        foreach(dep ${deps_resolved})
+            file(INSTALL ${dep} DESTINATION ${CMAKE_INSTALL_PREFIX})
+        endforeach()
+        foreach(dep ${deps_unresolved})
+            message(WARNING "Runtime dependency ${dep} could not be resolved.")
+        endforeach()
+        ]])
+
 
 # make deployment using cpack and nsis
 set(CPACK_GENERATOR "NSIS")
