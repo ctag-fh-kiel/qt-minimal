@@ -10,6 +10,7 @@
 #include <QTextEdit>
 
 #include "QCookDishes.h"
+#include "QKiTest.hpp"
 
 QMyMainWindow::QMyMainWindow(QWidget *parent) : QMainWindow(parent){
     // status bar
@@ -38,10 +39,14 @@ QMyMainWindow::QMyMainWindow(QWidget *parent) : QMainWindow(parent){
     QTextEdit *tedtConsoleLog = new QTextEdit(this);
     connect(cookDishes, &QCookDishes::cooking_step, tedtConsoleLog, &QTextEdit::append);
 
+    // create instance of QKiTest
+    QKiTest *qKiTest = new QKiTest(this);
+
     // Set layout
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(btnStartCooking);
     layout->addWidget(tedtConsoleLog);
+    layout->addWidget(qKiTest);
     tedtConsoleLog->append(tr("Give me some work!"));
 
     // Set layout in QWidget
