@@ -6,6 +6,8 @@
 
 // Qt includes
 #include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QMenu>
+
 
 // write ctor
 QKiTest::QKiTest(QWidget *parent) : QWidget(parent) {
