@@ -24,6 +24,13 @@ QKiTest::QKiTest(QWidget *parent) : QWidget(parent) {
         button2->setText("Button 2 clicked");
     });
 
+    // add a context menu to button2 on right click
+    button2->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(button2, &QPushButton::customContextMenuRequested, [this](const QPoint &pos) {
+        QMenu *menu = new QMenu(this);
+        menu->addAction("Button 2 context menu");
+        menu->popup(button2->mapToGlobal(pos));
+    });
 
     // add buttons to layout
     layout->addWidget(button1);
