@@ -6,6 +6,7 @@
 #define QT_MINIMAL_QKITEST_HPP
 
 #include <QtWidgets/QWidget>
+#include <QtWidgets/QPushButton>
 
 class QKiTest : public QWidget {
     Q_OBJECT

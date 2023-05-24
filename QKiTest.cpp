@@ -5,7 +5,6 @@
 #include "QKiTest.hpp"
 
 // Qt includes
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 
 // write ctor
